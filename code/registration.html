@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Page</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .overlay-card {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2;
+        }
+        .success-card {
+            background: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+    </style>
+</head>
+<body style="background: url('../main.jpg') no-repeat center center fixed; background-size: cover; height: 100vh;">
+    <div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
+        <div class="card" style="width: 320px; background: rgb(255, 255, 255); border-radius: 8px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); padding: 20px;">
+            <h1 class="text-center">Registration</h1>
+            <form id="registration-form" class="form" onsubmit="return validateRegistrationForm()">
+                <div class="form-group">
+                    <label for="assistive-ai">Assistive AI:</label>
+                    <input type="checkbox" id="assistive-ai" name="assistive-ai" aria-label="Enable Assistive AI" onchange="updateAssistiveAI()">
+                </div>
+                <div class="form-group">
+                    <label for="first-name">First Name:</label>
+                    <input type="text" id="first-name" name="first-name" class="form-control">
+                    <span class="error text-danger" id="first-name-error" aria-live="polite"></span>
+                </div>
+                <div class="form-group">
+                    <label for="last-name">Last Name:</label>
+                    <input type="text" id="last-name" name="last-name" class="form-control">
+                    <span class="error text-danger" id="last-name-error" aria-live="polite"></span>
+                </div>
+                <div class="form-group">
+                    <label for="dob">Date of Birth:</label>
+                    <input type="date" id="dob" name="dob" class="form-control">
+                    <span class="error text-danger" id="dob-error" aria-live="polite"></span>
+                </div>
+                <div class="form-group">
+                    <label for="new-email">Email:</label>
+                    <input type="email" id="new-email" name="new-email" class="form-control">
+                    <span class="error text-danger" id="email-error" aria-live="polite"></span>
+                </div>
+                <div class="form-group">
+                    <label for="new-password">Password (minimum 8 characters):</label>
+                    <input type="password" id="new-password" name="new-password" class="form-control">
+                    <span class="error text-danger" id="password-error" aria-live="polite"></span>
+                </div>
+                <div class="form-group">
+                    <label for="confirm-password">Confirm Password:</label>
+                    <input type="password" id="confirm-password" name="confirm-password" class="form-control">
+                    <span class="error text-danger" id="confirm-password-error" aria-live="polite"></span>
+                </div>
+               
+                <div class="btn-container text-center">
+                    <button type="submit" class="btn btn-primary">Register</button>
+                </div>
+            </form>
+            <div class="login-link text-center mt-3 visually-hidden">
+                Already have an account? <a href="main.html">Login</a>
+            </div>
+        </div>
+        <div id="overlay" class="overlay-card" style="display: none;">
+            <div class="success-card">
+                <h2>Registration Successful</h2>
+                <p>Proceed to Login</p>
+                <button id="close-overlay" class="btn btn-primary">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function validateRegistrationForm() {
+          
+            
+            const firstName = document.getElementById("first-name").value;
+            const lastName = document.getElementById("last-name").value;
+            const email = document.getElementById("new-email").value;
+            const password = document.getElementById("new-password").value;
+            const confirmPassword = document.getElementById("confirm-password").value;
+            const dob = document.getElementById("dob").value;
+
+            const firstNameError = document.getElementById("first-name-error");
+            const lastNameError = document.getElementById("last-name-error");
+            const emailError = document.getElementById("email-error");
+            const passwordError = document.getElementById("password-error");
+            const confirmPassError = document.getElementById("confirm-password-error");
+            const dobError = document.getElementById("dob-error");
+            
+
+            firstNameError.textContent = "";
+            lastNameError.textContent = "";
+            emailError.textContent = "";
+            passwordError.textContent = "";
+            confirmPassError.textContent = "";
+            dobError.textContent = "";
+
+            if (!firstName) {
+                firstNameError.textContent = "First Name is required.";
+                speakErrorMessage(firstNameError.textContent);
+                return false;
+            }
+
+            if (!lastName) {
+                lastNameError.textContent = "Last Name is required.";
+                speakErrorMessage(lastNameError.textContent);
+                return false;
+            }
+
+            if (!email) {
+                emailError.textContent = "Email is required.";
+                speakErrorMessage(emailError.textContent);
+                return false;
+            }
+
+            if (password.length < 8) {
+                passwordError.textContent = "Password must be at least 8 characters long.";
+                speakErrorMessage(passwordError.textContent);
+                return false;
+            }
+
+            if (password !== confirmPassword) {
+                passwordError.textContent = "Passwords do not match.";
+                confirmPassError.textContent = "Passwords do not match.";
+                speakErrorMessage(passwordError.textContent);
+                return false;
+            }
+
+            const currentYear = new Date().getFullYear();
+            const dobYear = new Date(dob).getFullYear();
+
+            if (dobYear >= currentYear - 23 || dobYear <= 1945) {
+                dobError.textContent = "Enter a valid birth year.";
+                speakErrorMessage(dobError.textContent);
+                return false;
+            }
+
+            document.getElementById("overlay").style.display="flex";
+            const assistiveAIValue = localStorage.getItem("assistiveai");
+            if (assistiveAIValue === "on") {
+                const speech = new SpeechSynthesisUtterance("Registration successful! Proceed to login.");
+                window.speechSynthesis.speak(speech);
+            }
+
+            
+            sessionStorage.setItem("userEmail", email);
+            sessionStorage.setItem("userFirstName", firstName);
+            sessionStorage.setItem("userLastName", lastName);
+            sessionStorage.setItem("userDOB", dob);
+            sessionStorage.setItem("userPassword", password);
+
+            return false;
+        }
+
+        function updateAssistiveAI() {
+            const assistiveAI = document.getElementById("assistive-ai").checked;
+            console.log(assistiveAI)
+            if (assistiveAI) {
+                sessionStorage.setItem("assistiveai", "on");
+                
+            } else {
+                sessionStorage.setItem("assistiveai", "off");
+                
+            }
+            console.log(assistiveAI)
+        }
+
+        function speakErrorMessage(message) {
+            const assistiveAIValue = localStorage.getItem("assistiveai");
+            console.log(assistiveAIValue)
+            if (assistiveAIValue === "on") {
+                const speech = new SpeechSynthesisUtterance(message);
+                window.speechSynthesis.speak(speech);
+            }
+        }
+
+        document.getElementById("close-overlay").addEventListener("click", function() {
+            document.getElementById("overlay").style.display = "none";
+            window.location.href = "main.html";
+        });
+    </script>
+</body>
+</html>

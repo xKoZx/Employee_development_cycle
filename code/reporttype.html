@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Type</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .card {
+            margin: 10px;
+            background: rgba(255, 255, 255, 0.7); 
+            width:70%;
+            margin-left: 10%;
+            align-items: center;
+        }
+
+        .card-img {
+            max-height: 400px; 
+            max-width: 100%; 
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const speech = new SpeechSynthesisUtterance("Here you can choose between two options");
+            window.speechSynthesis.speak(speech);
+        });
+    </script>
+</head>
+<body>
+    <a href="home.html">
+        <button class="btn btn-primary left-arrow-button">
+            <
+        </button>
+    </a>
+    <div class="container">
+        <h2 class="text-center mt-5">Choose How to Report</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <img src="myai.jpg" class="card-img" alt="Express Your Issue">
+                    <div class="card-body">
+                        <h5 class="card-title">Chatbot</h5>
+                        <p class="card-text">Express your issue with our latest technology "My AI" which will interact with you based on your issue.</p>
+                        <a href="chatbot.html" class="btn btn-primary">Report Now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <img src="report.jpg" class="card-img" alt="Classic Reporting">
+                    <div class="card-body">
+                        <h5 class="card-title">Classic Reporting</h5>
+                        <p class="card-text">You can also express your issue in the classic reporting style by adding a screenshot and explanation.</p>
+                        <a href="issuewindow.html" class="btn btn-primary">Report Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

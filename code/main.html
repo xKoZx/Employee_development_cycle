@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container-fluid d-flex justify-content-center align-items-center" style="background: url('../main.jpg') no-repeat center center fixed; background-size: cover; backdrop-filter: blur(5px); height: 100vh;">
+        <div class="card" style="width: 360px; background: rgb(255, 255, 255); border-radius: 8px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); padding: 20px;">
+            <h1 class="text-center">Login</h1>
+            <form id="login-form" class="form" onsubmit="return validateLoginForm()">
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" class="form-control">
+                    <div class="text-danger" id="email-error" style="display: none;">Invalid Email.</div>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" class="form-control">
+                    <div class="text-danger" id="password-error" style="display: none;">Invalid Password.</div>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </div>
+            </form>
+            <div class="text-center mt-3 ">
+                New user? <a href="registration.html">Register</a>
+            </div>
+        </div>
+    </div>
+    <script>
+        function validateLoginForm() {
+            
+            const enteredEmail = document.getElementById("email").value;
+            const enteredPassword = document.getElementById("password").value;
+            const emailError = document.getElementById("email-error");
+            const passwordError = document.getElementById("password-error");
+
+            
+            const assistiveAIValue = sessionStorage.getItem("assistiveai");
+
+            const storedEmail = sessionStorage.getItem("userEmail");
+            const storedPassword = sessionStorage.getItem("userPassword");
+            console.log(storedEmail,storedPassword)
+            const value=sessionStorage.getItem("assistiveai");
+                console.log(value)
+
+            if (!enteredEmail || !enteredPassword) {
+                emailError.style.display = "block";
+                passwordError.style.display = "none";
+                return false;
+            }
+
+            if (enteredEmail !== storedEmail || enteredPassword !== storedPassword) {
+                passwordError.style.display = "block";
+                emailError.style.display = "none";
+
+               
+                const assistiveAIValue = localStorage.getItem("assistiveai");
+            if (assistiveAIValue === "on") {
+                const speech = new SpeechSynthesisUtterance("Account not found or invalid password");
+                window.speechSynthesis.speak(speech);
+            }
+
+                return false;
+            } else {
+                emailError.style.display = "none";
+                passwordError.style.display = "none";
+
+                
+                window.location.href = "home.html";
+                const name=sessionStorage.getItem("userFirstName")
+                const value=sessionStorage.getItem("assistiveai");
+                console.log(value)
+                if(value==='on'){
+                const speech = new SpeechSynthesisUtterance("Welcome!"+name+". At the top you can see navigation bar where you can navigate to different pages like viewing your profile, reporting issues, rating our services and get to know about us");
+                window.speechSynthesis.speak(speech);
+                }
+                return false;
+            }
+        }
+    </script>
+</body>
+</html>

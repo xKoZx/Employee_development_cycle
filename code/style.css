@@ -1,0 +1,74 @@
+
+body{
+    font-family: 'Roboto', sans-serif;
+    color: #000000;
+    background: #f7f7f7;
+}
+
+
+/* navbar & logo */
+
+.navbar .logo a img{
+    width: 200px;
+}
+
+/* primary button  */
+
+.primary-btn{
+    background:#FF6632;
+    color:#ffff;
+    border: 2px solid #FF6632;
+}
+
+.primary-btn:hover{
+    background-color: #FF6632;
+    opacity: 0.9;
+}
+
+
+.text-main{
+    color: #FF6632;
+}
+
+
+/* button outline  */
+
+.btn-outline-secondary{
+    border: 1px solid #FF6632;
+    color: #000000;
+}
+
+.btn-outline-secondary:hover{
+    background-color: #000000;
+    border: none;
+
+}
+
+.btn-outline-secondary-white{
+    background-color: #f7f7f7;
+    color: #000000;
+}
+
+.btn-outline-secondary-white:hover{
+    background-color: #000000;
+    border: none;
+
+}
+
+.bg-main{
+    background-color: #FF6632;
+}
+
+
+
+
+.icons-lg{
+    font-size: 10rem; /* Adjust the size as needed */
+}
+
+@media(min-width:768px)
+{
+    .newsletter{
+        width: 50%; 
+    }
+}

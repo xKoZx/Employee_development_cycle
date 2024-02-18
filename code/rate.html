@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body style="background-image: url('../about.jpg'); background-size: cover; background-position: center; background-attachment: fixed; background-color: #f2f2f2;">
+    <div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
+        <div class="card" style="width: 320px; background: rgba(255, 255, 255, 0.8); border-radius: 10px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); padding: 20px;">
+            <h1 class="text-center">Feedback</h1>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="text" id="email" class="form-control" disabled>
+            </div>
+            <div class="form-group">
+                <label for="rate">Rate Our Service:</label>
+                <select id="rate" class="form-control">
+                    <option value="0">-- Select Option --</option>
+                    <option value="5">5 - Excellent</option>
+                    <option value="4">4 - Very Good</option>
+                    <option value="3">3 - Good</option>
+                    <option value="2">2 - Fair</option>
+                    <option value="1">1 - Poor</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="review">Review (optional):</label>
+                <textarea id="review" class="form-control" rows="4"></textarea>
+                <small class="form-text text-muted">Your rating or review helps our organization to improve its technology and services.</small>
+            </div>
+            <div class="error-message text-danger" id="option-error" style="display: none;">Please select an option.</div>
+            <div class="btn-container text-center">
+                <button type="button" class="btn btn-primary" onclick="submitFeedback()">Submit</button>
+                <a href="home.html" class="btn btn-secondary">Homepage</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const email = sessionStorage.getItem("userEmail");
+        document.getElementById("email").value = email;
+        const value=sessionStorage.getItem('assistiveai');
+
+        function submitFeedback() {
+            const selectedOption = document.getElementById("rate");
+            const optionError = document.getElementById("option-error");
+
+            if (selectedOption.value === "0") {
+                optionError.style.display = "block";
+            } else {
+                optionError.style.display = "none";
+                if(value==='on'){
+                    const speech = new SpeechSynthesisUtterance("Rating submitted!");
+                window.speechSynthesis.speak(speech);
+                }
+                alert("Feedback submitted");
+               
+
+                selectedOption.value = "0";
+
+                document.getElementById("review").value = "";
+            }
+        }
+    </script>
+</body>
+</html>
